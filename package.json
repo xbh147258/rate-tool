@@ -1,0 +1,17 @@
+{
+  "name": "rate-tool-site",
+  "version": "1.0.0",
+  "description": "跨境汇率工具站 - 免费数据源 + GitHub Actions + Cloudflare Pages",
+  "type": "module",
+  "scripts": {
+    "collect": "node scripts/collect.mjs",
+    "build": "node scripts/build.mjs",
+    "watchdog": "node scripts/watchdog.mjs",
+    "all": "node scripts/collect.mjs && node scripts/build.mjs && node scripts/watchdog.mjs",
+    "dev": "node scripts/collect.mjs && node scripts/build.mjs && npx -y serve dist -l 3000"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  }
+}

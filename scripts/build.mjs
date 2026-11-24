@@ -144,7 +144,7 @@ ${body}
 </div>
 <footer><div class="container">
 <p>数据每日自动更新 · 汇率数据来源 <a href="https://www.exchangerate-api.com" rel="nofollow noopener" target="_blank">ExchangeRate-API</a> · 仅供参考，交易以银行/平台实时报价为准</p>
-<p><a href="/">首页</a> · <a href="/about.html">关于</a> · <a href="/privacy.html">隐私政策</a> · <a href="/sitemap.xml">网站地图</a></p>
+<p><a href="/">首页</a> · <a href="/about">关于</a> · <a href="/privacy">隐私政策</a> · <a href="/sitemap.xml">网站地图</a></p>
 </div></footer>
 </body>
 </html>`;
@@ -200,7 +200,7 @@ ${adSlot()}
 <h2 style="margin-bottom:12px">热门货币对（相对美元）</h2>
 <div class="grid">
 ${codes.filter(c => c !== 'USD').map(c => `
-<div class="rate-item"><a href="/usd-${c.toLowerCase()}.html">
+<div class="rate-item"><a href="/usd-${c.toLowerCase()}">
 <div class="code">USD → ${c}</div>
 <div class="val">${num(rates[c])}</div>
 <div class="name">${CORE[c]}</div>
@@ -212,7 +212,7 @@ ${codes.filter(c => c !== 'USD').map(c => `
 <table>
 <tr><th>货币</th><th>名称</th><th>1 单位 = 人民币</th><th>最新更新</th></tr>
 ${codes.filter(c => c !== 'CNY').map(c => `
-<tr><td><a href="/${c.toLowerCase()}-cny.html">${c}/CNY</a></td><td>${CORE[c]}</td><td>${num(rates.CNY / rates[c])}</td><td>${new Date().toISOString().slice(0,10)}</td></tr>`).join('')}
+<tr><td><a href="/${c.toLowerCase()}-cny">${c}/CNY</a></td><td>${CORE[c]}</td><td>${num(rates.CNY / rates[c])}</td><td>${new Date().toISOString().slice(0,10)}</td></tr>`).join('')}
 </table>
 </div>
 <div class="card">
@@ -279,7 +279,7 @@ ${adSlot()}
 <h2 style="margin-bottom:12px">其他常用汇率</h2>
 <div class="grid">
 ${related.slice(0, 18).map(c => `
-<div class="rate-item"><a href="/${from.toLowerCase()}-${c.toLowerCase()}.html">
+<div class="rate-item"><a href="/${from.toLowerCase()}-${c.toLowerCase()}">
 <div class="code">${from} → ${c}</div>
 <div class="val">${num(rates[c] / rates[from])}</div>
 <div class="name">${CORE[c]}</div>
@@ -287,12 +287,12 @@ ${related.slice(0, 18).map(c => `
 </div>
 </div>`;
 
-  return { slug, html: pageShell({ title, desc, canonical: '/' + slug, body }) };
+  return { slug, html: pageShell({ title, desc, canonical: '/' + slug.replace(/\.html$/, ''), body }) };
 }
 
 function buildSitemap(slugs) {
   // 合规页也必须进 sitemap，方便审核方抓取
-  const all = ['/', ...slugs, '/privacy.html', '/about.html'];
+  const all = ['/', ...slugs.map(s => s.replace(/\.html$/, '')), '/privacy', '/about'];
   const urls = all.map(s => `<url><loc>${siteMeta.domain}${s}</loc><changefreq>daily</changefreq></url>`).join('');
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -357,7 +357,7 @@ function main() {
 <h3 style="margin-top:14px">4. 汇率数据</h3>
 <p>本站汇率来自公开数据接口，仅供参考，不构成任何投资或交易建议。</p>
 <h3 style="margin-top:14px">5. 联系方式</h3>
-<p>如有疑问请通过 <a href="/about.html">关于页面</a> 提供的方式联系。</p>
+<p>如有疑问请通过 <a href="/about">关于页面</a> 提供的方式联系。</p>
 <p class="note" style="margin-top:14px">最后更新：${new Date().toISOString().slice(0, 10)}</p></div>`,
   }), 'utf8');
 

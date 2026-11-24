@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SGD 兑 RUB 汇率 · 1 SGD = 63.44 RUB（实时）</title>
+<meta name="description" content="查询 新加坡元(SGD) 兑换 俄罗斯卢布(RUB) 的实时汇率，当前 1 SGD = 63.44 RUB。支持换算、历史参考，数据每日自动更新。">
+<link rel="canonical" href="https://rate-tool.pages.dev/sgd-rub.html">
+<meta name="robots" content="index,follow">
+
+<style>
+:root{--bg:#0f172a;--card:#1e293b;--txt:#e2e8f0;--sub:#94a3b8;--accent:#38bdf8;--green:#34d399}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);line-height:1.6}
+.container{max-width:960px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(135deg,#0ea5e9,#6366f1);padding:32px 0;margin-bottom:24px}
+header h1{font-size:1.6em;font-weight:700}
+header p{opacity:.9;margin-top:6px;font-size:.95em}
+.card{background:var(--card);border-radius:12px;padding:20px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+.rate-item{background:#0b1220;border-radius:8px;padding:12px;text-align:center}
+.rate-item .code{font-weight:700;font-size:1.1em;color:var(--accent)}
+.rate-item .val{font-size:1.3em;font-weight:700;margin:4px 0}
+.rate-item .name{color:var(--sub);font-size:.82em}
+.converter{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.converter input,.converter select{flex:1;min-width:140px;padding:12px;border-radius:8px;border:1px solid #334155;background:#0b1220;color:var(--txt);font-size:1em}
+.converter .arrow{color:var(--accent);font-size:1.4em}
+.result{font-size:1.4em;font-weight:700;color:var(--green);margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:.92em}
+th,td{padding:10px;text-align:left;border-bottom:1px solid #334155}
+th{color:var(--sub);font-weight:600}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+footer{text-align:center;color:var(--sub);padding:32px 0;font-size:.85em}
+.note{color:var(--sub);font-size:.8em;margin-top:8px}
+.ads-placeholder{background:#0b1220;border:1px dashed #334155;border-radius:8px;padding:20px;text-align:center;color:var(--sub);margin:16px 0;font-size:.85em}
+</style>
+
+</head>
+<body>
+<header><div class="container">
+<h1>SGD 兑 RUB 汇率 · 1 SGD = 63.44 RUB（实时）</h1>
+<p>查询 新加坡元(SGD) 兑换 俄罗斯卢布(RUB) 的实时汇率，当前 1 SGD = 63.44 RUB。支持换算、历史参考，数据每日自动更新。</p>
+</div></header>
+<div class="container">
+
+<div class="card">
+<h2 style="margin-bottom:12px">汇率换算器</h2>
+<div class="converter">
+<select id="from">
+<option value="USD" >USD 美元</option><option value="CNY" >CNY 人民币</option><option value="EUR" >EUR 欧元</option><option value="GBP" >GBP 英镑</option><option value="JPY" >JPY 日元</option><option value="HKD" >HKD 港币</option><option value="AUD" >AUD 澳元</option><option value="CAD" >CAD 加元</option><option value="SGD" selected>SGD 新加坡元</option><option value="KRW" >KRW 韩元</option><option value="THB" >THB 泰铢</option><option value="VND" >VND 越南盾</option><option value="MYR" >MYR 马来西亚林吉特</option><option value="PHP" >PHP 菲律宾比索</option><option value="IDR" >IDR 印尼盾</option><option value="INR" >INR 印度卢比</option><option value="AED" >AED 阿联酋迪拉姆</option><option value="RUB" >RUB 俄罗斯卢布</option><option value="BRL" >BRL 巴西雷亚尔</option><option value="TRY" >TRY 土耳其里拉</option><option value="MXN" >MXN 墨西哥比索</option><option value="ZAR" >ZAR 南非兰特</option>
+</select>
+<span class="arrow">⇄</span>
+<select id="to">
+<option value="USD" >USD 美元</option><option value="CNY" >CNY 人民币</option><option value="EUR" >EUR 欧元</option><option value="GBP" >GBP 英镑</option><option value="JPY" >JPY 日元</option><option value="HKD" >HKD 港币</option><option value="AUD" >AUD 澳元</option><option value="CAD" >CAD 加元</option><option value="SGD" >SGD 新加坡元</option><option value="KRW" >KRW 韩元</option><option value="THB" >THB 泰铢</option><option value="VND" >VND 越南盾</option><option value="MYR" >MYR 马来西亚林吉特</option><option value="PHP" >PHP 菲律宾比索</option><option value="IDR" >IDR 印尼盾</option><option value="INR" >INR 印度卢比</option><option value="AED" >AED 阿联酋迪拉姆</option><option value="RUB" selected>RUB 俄罗斯卢布</option><option value="BRL" >BRL 巴西雷亚尔</option><option value="TRY" >TRY 土耳其里拉</option><option value="MXN" >MXN 墨西哥比索</option><option value="ZAR" >ZAR 南非兰特</option>
+</select>
+<input id="amount" type="number" value="100" min="0" step="any" placeholder="输入金额">
+</div>
+<div class="result" id="result">计算中…</div>
+<div class="note">1 SGD = 63.44 RUB</div>
+</div>
+<script>
+const RATES={"USD":1,"AED":3.6725,"AFN":65.5486,"ALL":82.078455,"AMD":360.400084,"ANG":1.79,"AOA":928.032328,"ARS":1575.9572,"AUD":1.508917,"AWG":1.79,"AZN":1.70327,"BAM":1.790853,"BBD":2,"BDT":124.461097,"BGN":1.790853,"BHD":0.376,"BIF":3007.602946,"BMD":1,"BND":1.291224,"BOB":11.736523,"BRL":5.958461,"BSD":1,"BTN":92.995012,"BWP":14.661123,"BYN":3.001563,"BZD":2,"CAD":1.435985,"CDF":2309.094632,"CHF":0.841327,"CLF":0.0259,"CLP":1023.741046,"CNH":6.667688,"CNY":6.679299,"COP":3498.224647,"CRC":447.836011,"CUP":24,"CVE":100.964013,"CZK":22.379021,"DJF":177.721,"DKK":6.835105,"DOP":60.128772,"DZD":137.419706,"EGP":54.330891,"ERN":15,"ETB":161.535984,"EUR":0.915641,"FJD":2.295869,"FKP":0.76667,"FOK":6.835073,"GBP":0.766672,"GEL":2.591168,"GGP":0.76667,"GHS":11.82818,"GIP":0.76667,"GMD":74.800953,"GNF":8850.099481,"GTQ":7.65602,"GYD":209.259401,"HKD":7.842241,"HNL":26.912355,"HRK":6.898956,"HTG":131.161778,"HUF":338.850854,"IDR":18195.480115,"ILS":3.313868,"IMP":0.76667,"INR":92.995018,"IQD":1514.175034,"IRR":1784324.551707,"ISK":125.257411,"JEP":0.76667,"JMD":158.286186,"JOD":0.709,"JPY":159.06171,"KES":130.093683,"KGS":87.465375,"KHR":4064.631198,"KID":1.508964,"KMF":450.46967,"KRW":1343.513843,"KWD":0.311688,"KYD":0.833333,"KZT":454.802635,"LAK":22416.132924,"LBP":89500,"LKR":332.377239,"LRD":167.748607,"LSL":17.428589,"LYD":6.469003,"MAD":10.011304,"MDL":18.306971,"MGA":4603.464197,"MKD":55.881655,"MMK":2104.315472,"MNT":3619.190496,"MOP":8.077522,"MRU":40.717782,"MUR":46.868213,"MVR":15.453399,"MWK":1743.974136,"MXN":19.184157,"MYR":4.122789,"MZN":63.805858,"NAD":17.428589,"NGN":1380.144451,"NIO":36.845277,"NOK":9.834566,"NPR":148.792019,"NZD":1.835368,"OMR":0.384497,"PAB":1,"PEN":3.456345,"PGK":4.540692,"PHP":63.848367,"PKR":276.548085,"PLN":4.075357,"PYG":6349.505212,"QAR":3.64,"RON":4.883869,"RSD":107.407516,"RUB":81.917395,"RWF":1479.918193,"SAR":3.75,"SBD":8.074697,"SCR":14.367166,"SDG":454.213423,"SEK":10.275271,"SGD":1.291199,"SHP":0.76667,"SLE":22.929351,"SLL":22929.350553,"SOS":571.96664,"SRD":37.29385,"SSP":5757.996301,"STN":22.433395,"SYP":121.936598,"SZL":17.428589,"THB":33.998037,"TJS":9.223442,"TMT":3.499627,"TND":3.068727,"TOP":2.398683,"TRY":50.621508,"TTD":6.770422,"TVD":1.508964,"TWD":32.841226,"TZS":2666.579969,"UAH":45.120535,"UGX":4084.956124,"UYU":40.637377,"UZS":11960.809956,"VES":919.8227,"VND":25800.612967,"VUV":121.375632,"WST":2.795366,"XAF":600.626227,"XCD":2.7,"XCG":1.79,"XDR":0.745353,"XOF":600.626227,"XPF":109.2662,"YER":237.010531,"ZAR":17.428652,"ZMW":20.608798,"ZWG":26.5534,"ZWL":26.5534};
+const $=id=>document.getElementById(id);
+function calc(){
+  const f=$('from').value,t=$('to').value,a=parseFloat($('amount').value)||0;
+  const r=RATES[t]/RATES[f];
+  $('result').textContent=a.toLocaleString()+' '+f+' = '+ (a*r).toLocaleString(undefined,{maximumFractionDigits:4})+' '+t;
+}
+['from','to','amount'].forEach(x=>$(x).addEventListener('input',calc));
+calc();
+</script>
+<div class="card">
+<h2 style="margin-bottom:12px">SGD 兑 RUB 实时汇率</h2>
+<p style="font-size:1.6em;font-weight:700;color:var(--green)">1 SGD = 63.44 RUB</p>
+<p class="note">反向：1 RUB = 0.01576 SGD</p>
+<p class="note">更新时间：2026-11-24 16:53 UTC</p>
+</div>
+<div class="card">
+<h2 style="margin-bottom:12px">新加坡元 兑换 俄罗斯卢布 速查表</h2>
+<table>
+<tr><th>SGD 金额</th><th>RUB 金额</th></tr>
+<tr><td>1 SGD</td><td>63.44 RUB</td></tr><tr><td>5 SGD</td><td>317.2 RUB</td></tr><tr><td>10 SGD</td><td>634.4 RUB</td></tr><tr><td>50 SGD</td><td>3,172 RUB</td></tr><tr><td>100 SGD</td><td>6,344 RUB</td></tr><tr><td>500 SGD</td><td>31,720 RUB</td></tr><tr><td>1000 SGD</td><td>63,440 RUB</td></tr>
+</table>
+</div>
+<div class="ads-placeholder">[广告位 AdSense]申请通过后替换</div>
+<div class="card">
+<h2 style="margin-bottom:12px">关于 新加坡元(SGD) 与 俄罗斯卢布(RUB)</h2>
+<p>新加坡元（SGD）：东南亚金融中心货币，由新加坡金管局以篮子货币方式管理汇率。主要流通地区：新加坡。</p>
+<p style="margin-top:8px">俄罗斯卢布（RUB）：卢布受能源出口与制裁政策影响，波动幅度通常较大。主要流通地区：俄罗斯。</p>
+<p style="margin-top:8px" class="note">换算说明：本页汇率由两个币种对美元的中间价交叉计算得出，用于快速估算。实际跨境收款、结汇或银行卡刷卡时，银行与支付机构会在此基础上加减点差并收取手续费，最终到账金额以机构报价为准。</p>
+</div>
+<div class="card">
+<h2 style="margin-bottom:12px">其他常用汇率</h2>
+<div class="grid">
+
+<div class="rate-item"><a href="/sgd-usd.html">
+<div class="code">SGD → USD</div>
+<div class="val">0.7745</div>
+<div class="name">美元</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-cny.html">
+<div class="code">SGD → CNY</div>
+<div class="val">5.173</div>
+<div class="name">人民币</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-eur.html">
+<div class="code">SGD → EUR</div>
+<div class="val">0.7091</div>
+<div class="name">欧元</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-gbp.html">
+<div class="code">SGD → GBP</div>
+<div class="val">0.5938</div>
+<div class="name">英镑</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-jpy.html">
+<div class="code">SGD → JPY</div>
+<div class="val">123.2</div>
+<div class="name">日元</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-hkd.html">
+<div class="code">SGD → HKD</div>
+<div class="val">6.074</div>
+<div class="name">港币</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-aud.html">
+<div class="code">SGD → AUD</div>
+<div class="val">1.169</div>
+<div class="name">澳元</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-cad.html">
+<div class="code">SGD → CAD</div>
+<div class="val">1.112</div>
+<div class="name">加元</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-krw.html">
+<div class="code">SGD → KRW</div>
+<div class="val">1,041</div>
+<div class="name">韩元</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-thb.html">
+<div class="code">SGD → THB</div>
+<div class="val">26.33</div>
+<div class="name">泰铢</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-vnd.html">
+<div class="code">SGD → VND</div>
+<div class="val">19,980</div>
+<div class="name">越南盾</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-myr.html">
+<div class="code">SGD → MYR</div>
+<div class="val">3.193</div>
+<div class="name">马来西亚林吉特</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-php.html">
+<div class="code">SGD → PHP</div>
+<div class="val">49.45</div>
+<div class="name">菲律宾比索</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-idr.html">
+<div class="code">SGD → IDR</div>
+<div class="val">14,090</div>
+<div class="name">印尼盾</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-inr.html">
+<div class="code">SGD → INR</div>
+<div class="val">72.02</div>
+<div class="name">印度卢比</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-aed.html">
+<div class="code">SGD → AED</div>
+<div class="val">2.844</div>
+<div class="name">阿联酋迪拉姆</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-brl.html">
+<div class="code">SGD → BRL</div>
+<div class="val">4.615</div>
+<div class="name">巴西雷亚尔</div>
+</a></div>
+<div class="rate-item"><a href="/sgd-try.html">
+<div class="code">SGD → TRY</div>
+<div class="val">39.21</div>
+<div class="name">土耳其里拉</div>
+</a></div>
+</div>
+</div>
+</div>
+<footer><div class="container">
+<p>数据每日自动更新 · 汇率数据来源 <a href="https://www.exchangerate-api.com" rel="nofollow noopener" target="_blank">ExchangeRate-API</a> · 仅供参考，交易以银行/平台实时报价为准</p>
+<p><a href="/">首页</a> · <a href="/about.html">关于</a> · <a href="/privacy.html">隐私政策</a> · <a href="/sitemap.xml">网站地图</a></p>
+</div></footer>
+</body>
+</html>

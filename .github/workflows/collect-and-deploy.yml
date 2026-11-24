@@ -1,0 +1,77 @@
+name: collect-and-deploy
+
+on:
+  schedule:
+    # 每天 UTC 02:00 和 14:00（北京时间 10:00 / 22:00）
+    - cron: '0 2,14 * * *'
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - '.github/workflows/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collect-deploy
+  cancel-in-progress: false
+
+jobs:
+  collect-and-deploy:
+    runs-on: ubuntu-latest
+    # 单一 job：采集→生成→看门狗→留档→部署，产物不经过 git push 传递，
+    # 看门狗失败则整个 job 失败、不会部署，避免"部署旧数据却无提示"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 域名注入检查
+        run: |
+          if [ -z "${{ vars.CF_PAGES_PROJECT }}" ]; then
+            echo "::error::仓库变量 CF_PAGES_PROJECT 未设置，域名无法生成"
+            exit 1
+          fi
+          echo "站点域名: https://${{ vars.CF_PAGES_PROJECT }}.pages.dev"
+
+      - name: 采集汇率
+        env:
+          SITE_DOMAIN: https://${{ vars.CF_PAGES_PROJECT }}.pages.dev
+        run: node scripts/collect.mjs
+
+      - name: 生成静态站
+        env:
+          SITE_DOMAIN: https://${{ vars.CF_PAGES_PROJECT }}.pages.dev
+          SITE_CONTACT: ${{ vars.SITE_CONTACT }}
+          ADSENSE_PUB_ID: ${{ vars.ADSENSE_PUB_ID }}
+          ADSENSE_SLOT_ID: ${{ vars.ADSENSE_SLOT_ID }}
+        run: node scripts/build.mjs
+
+      - name: 看门狗自检（失败即中止部署）
+        env:
+          # 必须与"生成静态站"步骤传同一批变量，否则看门狗无法校验广告配置一致性
+          ADSENSE_PUB_ID: ${{ vars.ADSENSE_PUB_ID }}
+        run: node scripts/watchdog.mjs
+
+      - name: 留档提交（失败不阻塞部署）
+        run: |
+          git config user.name "rate-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add data/rates.json dist/ || true
+          if git diff --cached --quiet; then
+            echo "无变更，跳过提交"
+          else
+            git commit -m "chore: auto update rates $(date -u +%Y-%m-%dT%H:%MZ)"
+            git push || echo "::warning::留档 push 失败（不影响部署）"
+          fi
+
+      - name: 部署到 Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=${{ vars.CF_PAGES_PROJECT }} --commit-dirty=true

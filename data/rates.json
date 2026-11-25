@@ -2,7 +2,7 @@
   "base": "USD",
   "source": "exchangerate-api-v6",
   "sourceUrl": "https://open.er-api.com/v6/latest/USD",
-  "fetchedAt": "2026-11-25T02:47:44.822Z",
+  "fetchedAt": "2026-11-25T14:53:15.441Z",
   "rates": {
     "USD": 1,
     "AED": 3.6725,
